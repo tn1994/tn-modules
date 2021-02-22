@@ -14,8 +14,11 @@ def join_filename():
         print('_'.join(split_list))
 
 
-def join_and_cp():
-    output_dir_path = 'archive'
+def join_and_cp(output_dir_path=None):
+    if output_dir_path is None:
+        output_dir_path = 'archive/cp'
+        if not is_dir(output_dir_path):
+            mkdir(output_dir_path)
     list = glob.glob('**/*', recursive=True)
     for i in list:
         if is_file(i):
@@ -28,3 +31,15 @@ def is_file(path):
     if isinstance(path, str):
         path = pathlib.Path(path)
     return path.suffix
+
+
+def is_dir(path):
+    if isinstance(path, str):
+        path = pathlib.Path(path)
+    return path.exists()
+
+
+def mkdir(path):
+    if isinstance(path, str):
+        path = pathlib.Path(path)
+    return path.mkdir()
